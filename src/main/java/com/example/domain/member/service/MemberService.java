@@ -1,5 +1,6 @@
 package com.example.domain.member.service;
 
+import com.example.domain.member.dto.MemberListRes;
 import com.example.domain.member.dto.MemberRes;
 import com.example.domain.member.entity.Member;
 import com.example.domain.member.repository.MemberRepository;
@@ -21,8 +22,13 @@ public class MemberService {
         Member savedmember = memberRepository.save(member);
         return MemberRes.of(savedmember);
     }
+    public MemberListRes getMemberList(){
+        return MemberListRes.from(memberRepository.findAll());
+    }
 
 
+
+    //회원가입 중복 검사 로직
     public void checkJoin(String username,String email){
         if(memberRepository.existsByUserName(username)){
             throw new ServiceException("이미 사용중인 아이디입니다.");

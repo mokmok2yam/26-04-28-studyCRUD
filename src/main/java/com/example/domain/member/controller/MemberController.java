@@ -1,16 +1,14 @@
 package com.example.domain.member.controller;
 
 import com.example.domain.member.dto.JoinReq;
+import com.example.domain.member.dto.MemberListRes;
 import com.example.domain.member.dto.MemberRes;
 import com.example.domain.member.service.MemberService;
 import com.example.global.RS.RsData;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/members")
@@ -18,7 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
 
-    //회원가입
+    /**
+     *
+     * @param req:username, password,email을 받은 req
+     * @return id,email을 받은 Rs데이터 리턴
+     */
     @PostMapping
     public ResponseEntity<RsData<MemberRes>> join(
             @RequestBody @Valid JoinReq req
@@ -30,6 +32,17 @@ public class MemberController {
                         "200",
                         "회원가입이 성공적으로 완료되었습니다."
                         , rst
+                )
+        );
+    }
+    @GetMapping
+    public ResponseEntity<RsData<MemberListRes>> getMemberList(){
+        MemberListRes rst= memberService.getMemberList();
+        return ResponseEntity.ok(
+                new RsData<>(
+                        "200",
+                        "회원조회가 완료되었습니다.",
+                        rst
                 )
         );
     }
