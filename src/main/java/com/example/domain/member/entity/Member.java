@@ -11,11 +11,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     String userName;
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     String email;
     @Column(nullable = false)
     String password;
-
+    public Member (String userName, String email, String password){
+        this.userName=userName;
+        this.email=email;
+        this.password=password;
+    }
 }
